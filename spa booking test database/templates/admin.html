@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>จัดการระบบ - ระบบสปา</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="app">
+        <nav class="navbar">
+            <div class="nav-brand">🧘‍♀️ Spa Booking</div>
+            <div class="nav-menu">
+                <a href="/booking_chart" class="nav-link">📅 Booking Chart</a>
+                <a href="/staff_management" class="nav-link">👥 Staff</a>
+                <a href="/admin" class="nav-link active">⚙️ System Management</a>
+            </div>
+            <div class="nav-user"><span>👋 {{ username }} (Admin)</span><a href="/logout" class="logout-btn">🚪 Logout</a></div>
+        </nav>
+        <div class="main-container">
+            <h2>⚙️ System Management (Admin Only)</h2>
+            <div class="admin-section"><h3>👤 User Management</h3><button id="addUserBtn" class="btn-primary">+ Add New User</button><div id="userList" class="data-table"><div class="loading">Loading...</div></div></div>
+            <div class="admin-section"><h3>💆 Package Management</h3><button id="addPackageBtn" class="btn-primary">+ Add New Package</button><div id="packageList" class="data-table"><div class="loading">Loading...</div></div></div>
+        </div>
+    </div>
+    <!-- Toast Notification -->
+    <div id="toast" class="toast" style="display: none;">
+        <div class="toast-content">
+            <span id="toast-message"></span>
+        </div>
+    </div>
+
+    <!-- Custom Confirm Modal -->
+    <div id="customConfirmModal" class="modal" style="display: none;">
+        <div class="modal-content" style="max-width: 400px;">
+            <div class="modal-header">
+                <h3>Confirm Action</h3>
+                <span class="modal-close" id="confirmClose">&times;</span>
+            </div>
+            <div class="modal-body">
+                <p id="confirmMessage"></p>
+            </div>
+            <div class="modal-footer">
+                <button id="confirmCancelBtn" class="btn-secondary">Cancel</button>
+                <button id="confirmOkBtn" class="btn-primary">OK</button>
+            </div>
+        </div>
+    </div>
+    <div id="userModal" class="modal" style="display: none;"><div class="modal-content"><div class="modal-header"><h3>➕ Add New User</h3><span class="modal-close">&times;</span></div><div class="modal-body"><div class="form-group"><label>👤 Username</label><input type="text" id="newUsername" class="form-input"></div><div class="form-group"><label>🔒 Password</label><input type="password" id="newPassword" class="form-input"></div><div class="form-group"><label>📛 Full Name</label><input type="text" id="newFullname" class="form-input"></div><div class="form-group"><label>🎭 Role</label><select id="newRole" class="form-input"><option value="staff">Staff</option><option value="admin">Admin</option></select></div></div><div class="modal-footer"><button class="btn-secondary modal-close">Cancel</button><button id="confirmUserBtn" class="btn-primary">Save</button></div></div></div>
+
+    <div id="packageModal" class="modal" style="display: none;"><div class="modal-content"><div class="modal-header"><h3>➕ Add New Massage</h3><span class="modal-close">&times;</span></div><div class="modal-body"><div class="form-group"><label>📦 Massage Name</label><input type="text" id="newPackageName" class="form-input"></div><div class="form-group"><label>⏱️ Duration (minutes)</label><input type="number" id="newPackageDuration" class="form-input" value="60"></div><div class="form-group"><label>💰 Price (THB)</label><input type="number" id="newPackagePrice" class="form-input" value="300"></div></div><div class="modal-footer"><button class="btn-secondary modal-close">Cancel</button><button id="confirmPackageBtn" class="btn-primary">Save</button></div></div></div>
+
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+</body>
+</html>

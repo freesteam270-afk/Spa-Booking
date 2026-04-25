@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>จัดการพนักงาน - ระบบสปา</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="app">
+        <nav class="navbar">
+            <div class="nav-brand">🧘‍♀️ Spa Booking</div>
+            <div class="nav-menu">
+                <a href="/booking_chart" class="nav-link">📅 Booking Chart</a>
+                <a href="/staff_management" class="nav-link active">👥 Staff</a>
+                {% if role == 'admin' %}<a href="/admin" class="nav-link">⚙️ System Management</a>{% endif %}
+            </div>
+            <div class="nav-user"><span>👋 {{ fullname }}</span><a href="/logout" class="logout-btn">🚪 Logout</a></div>
+        </nav>
+        <div class="main-container">
+            <h2>👥 Staff Management</h2>
+            <p class="subtitle">Staff must check in before they can be assigned tasks</p>
+            <div id="staffList" class="staff-list"><div class="loading">Loading...</div></div>
+        </div>
+    </div>
+
+    <div id="checkinModal" class="modal" style="display: none;">
+        <div class="modal-content">
+            <div class="modal-header"><h3>✅ Check-in Staff</h3><span class="modal-close">&times;</span></div>
+            <div class="modal-body">
+                <input type="hidden" id="checkinStaffId">
+                <p>Staff: <strong id="checkinStaffName"></strong></p>
+                <div class="form-group"><label>🕘 Start Time</label><input type="time" id="checkinTime" class="form-input" value="09:00"></div>
+                <div class="form-group"><label>🕔 End Time</label><input type="time" id="checkoutTime" class="form-input" value="18:00"></div>
+            </div>
+            <div class="modal-footer"><button class="btn-secondary modal-close">Cancel</button><button id="confirmCheckinBtn" class="btn-primary">Confirm Check-in</button></div>
+        </div>
+        
+        </div>
+        <!-- Toast Notification -->
+    <div id="toast" class="toast" style="display: none;">
+        <div class="toast-content">
+            <span id="toast-message"></span>
+        </div>
+    </div>
+
+    <!-- Custom Confirm Modal -->
+    <div id="customConfirmModal" class="modal" style="display: none;">
+        <div class="modal-content" style="max-width: 400px;">
+            <div class="modal-header">
+                <h3>Confirm Action</h3>
+                <span class="modal-close" id="confirmClose">&times;</span>
+            </div>
+            <div class="modal-body">
+                <p id="confirmMessage"></p>
+            </div>
+            <div class="modal-footer">
+                <button id="confirmCancelBtn" class="btn-secondary">Cancel</button>
+                <button id="confirmOkBtn" class="btn-primary">OK</button>
+            </div>
+        </div>
+    </div>
+        <script src="{{ url_for('static', filename='script.js') }}"></script>
+    </body>
+</html>

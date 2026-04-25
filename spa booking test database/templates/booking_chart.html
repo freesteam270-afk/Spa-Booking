@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ตารางจอง - ระบบสปา</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="app">
+        <nav class="navbar">
+            <div class="nav-brand">Spa Booking</div>
+            <div class="nav-menu">
+                <a href="/booking_chart" class="nav-link active">📅 Booking Chart</a>
+                <a href="/staff_management" class="nav-link">👥 Staff Management</a>
+                {% if role == 'admin' %}<a href="/admin" class="nav-link">⚙️ System Settings</a>{% endif %}
+            </div>
+            <div class="nav-user">
+                <span>👋 {{ fullname }}</span>
+                <a href="/logout" class="logout-btn">Logout</a>
+            </div>
+        </nav>
+        
+        <div class="main-container">
+            <div class="stats-bar">
+                <div class="stat-card">
+                    <span class="stat-label">Total Bookings Today (Queue)</span>
+                    <span class="stat-value" id="totalBookings">0</span>
+                </div>
+                <div class="stat-card">
+                    <span class="stat-label">Projected Revenue (THB)</span>
+                    <span class="stat-value" id="totalRevenue">0</span>
+                </div>
+                <div class="stat-card">
+                    <span class="stat-label">Staff Checked In (People)</span>
+                    <span class="stat-value" id="checkedInStaff">0</span>
+                </div>
+            </div>
+
+            <div class="view-controls">
+                <div class="date-selector">
+                    <button id="prevDayBtn" class="date-nav">◀</button>
+                    <input type="date" id="selectedDate" class="date-input">
+                    <button id="nextDayBtn" class="date-nav">▶</button>
+                </div>
+                <button id="addBookingBtn" class="btn-primary">+ Add New Booking</button>
+            </div>
+
+            <div id="staffSummary" style="margin-bottom: 20px; display: none;">
+                <h4 style="margin: 0 0 10px 0; color: #1e293b;">📋 Staff Work Summary Today</h4>
+                <div id="summaryContent" style="display: flex; flex-wrap: wrap; gap: 12px;"></div>
+            </div>
+
+            <div id="bookingTable" class="booking-table-container">
+                <div class="loading" style="padding: 2rem; text-align: center;">Loading data...</div>
+            </div>
+        </div>
+    </div>
+
+    <div id="bookingModal" class="modal" style="display: none;">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 id="modalTitle">Add New Booking</h3>
+                <span class="modal-close">&times;</span>
+            </div>
+            <div class="modal-body">
+                <input type="hidden" id="editBookingId">
+                
+                <div class="form-section">
+                    <div class="form-section-title">1. Customer Info</div>
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label>👤 Customer Name</label>
+                            <input type="text" id="customerName" class="form-input" required>
+                        </div>
+                        <div class="form-group">
+                            <label>⚥ Gender</label>
+                            <select id="customerGender" class="form-input">
+                                <option value="male">👨 Male</option>
+                                <option value="female">👩 Female</option>
+                                <option value="other">🔄 Other</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>🏨 Guest Type</label>
+                            <select id="guestType" class="form-input">
+                                <option value="outside">🌍 Outside Guest</option>
+                                <option value="inhouse">🏨 Inhouse Guest</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>🚪 Room Number (if applicable)</label>
+                            <input type="text" id="roomNumber" class="form-input" placeholder="e.g., 101">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-section">
+                    <div class="form-section-title">2. Service Details</div>
+                    <div class="form-grid">
+                        <div class="form-group full-width">
+                            <label>💆 Service Package</label>
+                            <select id="packageId" class="form-input"></select>
+                        </div>
+                        <div class="form-group full-width">
+                            <label>👩‍💼 Service Provider</label>
+                            <select id="staffId" class="form-input"></select>
+                        </div>
+                        <div class="form-group">
+                            <label>📅 Date of Service</label>
+                            <input type="date" id="bookingDate" class="form-input">
+                        </div>
+                        <div class="form-group">
+                            <label>⏰ Start Time</label>
+                            <input type="time" id="startTime" class="form-input" step="900">
+                        </div>
+                        <div class="form-group">
+                            <label>⏱️ Duration (Minutes)</label>
+                            <input type="number" id="durationMinutes" class="form-input">
+                        </div>
+                        <div class="form-group">
+                            <label>💰 Price (THB)</label>
+                            <input type="number" id="priceAmount" class="form-input">
+                        </div>
+                        <div class="form-group full-width">
+                            <label>📝 Additional Notes</label>
+                            <div style="display: flex; gap: 8px;">
+                                <input type="text" id="note" class="form-input" placeholder="Specify special requests..." style="flex: 1;">
+                                <button type="button" id="expandNoteBtn" class="btn-secondary" style="padding: 0.6rem 1rem;" title="View Full Notes">🔍</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button id="deleteBookingBtn" class="btn-danger" style="display: none; margin-right: auto;">🗑 Delete This Booking</button>
+                <button id="cancelModalBtn" class="btn-secondary">Cancel</button>
+                <button id="saveBookingBtn" class="btn-primary">Save Information</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="toast" class="toast" style="display: none;">
+        <span id="toast-message"></span>
+    </div>
+
+    <div id="customConfirmModal" class="modal" style="display: none;">
+        <div class="modal-content" style="max-width: 400px; min-width: unset;">
+            <div class="modal-header">
+                <h3>Confirm Action</h3>
+                <span class="modal-close" id="confirmClose">&times;</span>
+            </div>
+            <div class="modal-body">
+                <p id="confirmMessage" style="color: #334155; font-size: 1rem;"></p>
+            </div>
+            <div class="modal-footer" style="background: white; border-top: none;">
+                <button id="confirmCancelBtn" class="btn-secondary">Cancel</button>
+                <button id="confirmOkBtn" class="btn-primary">Confirm</button>
+            </div>
+        </div>
+    </div>
+        <!-- Modal แสดงหมายเหตุแบบเต็ม -->
+        <div id="noteModal" class="modal" style="display: none;">
+            <div class="modal-content" style="max-width: 500px;">
+                <div class="modal-header">
+                    <h3>📝 Additional Notes</h3>
+                    <span class="modal-close" id="closeNoteModal">&times;</span>
+                </div>
+                <div class="modal-body">
+                    <p id="noteFullText" style="white-space: pre-wrap; word-break: break-word;"></p>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn-secondary close-note-modal">Close</button>
+                </div>
+            </div>
+        </div>
+            
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+</body>
+</html>

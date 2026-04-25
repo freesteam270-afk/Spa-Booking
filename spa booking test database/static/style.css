@@ -1,0 +1,468 @@
+/* ========================================
+   SPA BOOKING SYSTEM - PREMIUM UI
+   ======================================== */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Sarabun:wght@300;400;500;600;700&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Inter', 'Sarabun', system-ui, sans-serif;
+    background: #c2c0c07d;
+    color: #1e293b;
+    min-height: 100vh;
+}
+
+/* ----- Navbar ----- */
+.navbar {
+    background: #abacac;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+    padding: 0 2rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 70px;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+}
+
+.nav-brand {
+    font-size: 1.5rem;
+    font-weight: 700;
+    background: linear-gradient(135deg, #047655, #0c0c0c);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+}
+
+.nav-menu {
+    display: flex;
+    gap: 0.5rem;
+}
+
+.nav-link {
+    text-decoration: none;
+    color: #64748b;
+    padding: 0.5rem 1rem;
+    border-radius: 8px;
+    font-weight: 500;
+    transition: 0.2s;
+    font-size: 0.95rem;
+}
+
+.nav-link:hover, .nav-link.active {
+    background: #eff6ff;
+    color: #171719;
+}
+
+.nav-user {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    font-size: 0.9rem;
+    font-weight: 500;
+}
+
+.logout-btn {
+    text-decoration: none;
+    color: #ef4444;
+    background: #fef2f2;
+    padding: 0.4rem 1rem;
+    border-radius: 8px;
+    font-weight: 600;
+    transition: 0.2s;
+}
+
+.logout-btn:hover { background: #fee2e2; }
+
+.main-container {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 2rem;
+}
+
+/* ----- Stats & Controls ----- */
+.stats-bar {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 1.5rem;
+    margin-bottom: 2rem;
+}
+
+.stat-card {
+    background: #ffffff;
+    border-radius: 16px;
+    padding: 1.5rem;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+    border: 1px solid #e2e8f0;
+    display: flex;
+    flex-direction: column;
+}
+
+.stat-label {
+    font-size: 0.85rem;
+    color: #64748b;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+}
+
+.stat-value {
+    font-size: 2rem;
+    font-weight: 700;
+    color: #1e293b;
+}
+
+.view-controls {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1.5rem;
+}
+
+.date-selector {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    background: white;
+    padding: 0.5rem;
+    border-radius: 12px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+    border: 1px solid #e2e8f0;
+}
+
+.date-nav {
+    background: #f1f5f9;
+    border: none;
+    width: 36px;
+    height: 36px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: 600;
+    color: #475569;
+    transition: 0.2s;
+}
+
+.date-nav:hover { background: #e2e8f0; }
+
+.date-input {
+    border: none;
+    outline: none;
+    font-family: inherit;
+    font-weight: 600;
+    color: #1e293b;
+    font-size: 1rem;
+    cursor: pointer;
+}
+
+.btn-primary {
+    background: #249742;
+    color: white;
+    border: none;
+    padding: 0.6rem 1.2rem;
+    border-radius: 8px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.btn-primary:hover { background: #00ff26; }
+
+/* ----- ตาราง Gantt Chart (ปรับแก้ Layout ให้ตรง 100%) ----- */
+
+
+.booking-table-container {
+    background: #ffffff;
+    border-radius: 16px;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+    border: 1px solid #e2e8f0;
+    overflow: hidden;
+}
+
+.booking-table-wrapper {
+    overflow-x: auto;
+    overflow-y: hidden;
+}
+
+.booking-table-wrapper::-webkit-scrollbar {
+    height: 7px;
+}
+.booking-table-wrapper::-webkit-scrollbar-track {
+    background: #f1f5f9; 
+}
+.booking-table-wrapper::-webkit-scrollbar-thumb {
+    background: #cbd5e1; 
+    border-radius: 7px;
+}
+
+.booking-table {
+    table-layout: fixed; /* บังคับความกว้างให้คงที่ */
+    border-collapse: separate;
+    border-spacing: 0;
+    min-width: 100%;
+}
+
+.booking-table th, .booking-table td {
+    border-right: 1px solid #e2e8f0;
+    border-bottom: 1px solid #e2e8f0;
+    padding: 0;
+    
+}
+
+.booking-note {
+    cursor: pointer;
+    transition: background 0.2s;
+}
+.booking-note:hover {
+    background: #e2e8f0;
+}
+
+.booking-table th {
+    background: #1e293b;
+    padding: 6px 4px;
+    text-align: center;
+    font-size: 0.75rem;
+}
+
+.staff-header {
+    position: sticky;
+    left: 0;
+    z-index: 10;
+    background: #4f8d6e !important;
+    border-right: 2px solid #334155 !important;
+}
+
+/* ลบโค้ดซ้ำซ้อน จัด Sticky ให้สมบูรณ์ */
+.staff-name-cell {
+    position: sticky;
+    left: 0;
+    z-index: 5;
+    background-color: #f8fafc;
+    border-right: 2px solid #cbd5e1 !important;
+    padding: 12px 16px !important;
+    vertical-align: middle;
+    box-shadow: 2px 0 5px rgba(0,0,0,0.03); /* สร้างมิติแยกจากตารางเลื่อน */
+}
+
+.staff-row.checked-in .staff-name-cell {
+    background-color: #f0fdf4;
+    border-left: 4px solid #22c55e;
+}
+
+.staff-name-text {
+    font-weight: 700;
+    color: #1e293b;
+    font-size: 0.95rem;
+}
+
+.staff-time-text {
+    font-size: 0.75rem;
+    color: #64748b;
+    margin-top: 4px;
+}
+
+/* ช่องตาราง */
+.time-slot {
+    height: 150px;
+    background: #ffffff;
+    transition: 0.2s;
+    position: relative;
+    padding: 4px !important;
+}
+
+.time-slot.empty:hover { background: #f8fafc; cursor: pointer; }
+.time-slot.drag-over { background: #dcfce7 !important; }
+
+.empty-slot {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    color: #cbd5e1;
+    font-size: 1.5rem;
+    opacity: 0;
+    transition: 0.2s;
+}
+.time-slot.empty:hover .empty-slot { opacity: 1; color: #4f46e5; }
+
+/* Consolidated Booking Bar */
+.booking-bar {
+    background: #ffffff;
+    border: 1px solid #c7d2fe;
+    border-left: 4px solid #24ca56ba;
+    border-radius: 8px;
+    height: 100%;
+    padding: 8px 12px;
+    cursor: grab;
+    box-shadow: 0 2px 4px rgba(1, 252, 22, 0.05);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    overflow: hidden;
+    transition: 0.2s;
+}
+
+.booking-bar:hover {
+    box-shadow: 0 4px 12px rgba(79, 70, 229, 0.15);
+    transform: translateY(-2px);
+    border-color: #4c9c57;
+}
+.booking-bar.dragging { opacity: 0.5; }
+
+.booking-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 4px;
+}
+
+.customer-name { font-weight: 700; font-size: 0.85rem; color: #1e293b; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.badge { font-size: 0.65rem; padding: 2px 6px; border-radius: 4px; font-weight: 600; }
+.badge.inhouse { background: #dbeafe; color: #1e40af; }
+.badge.outside { background: #fef3c7; color: #92400e; }
+
+.package-name { font-size: 0.75rem; color: #475569; margin-bottom: 6px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+
+.booking-footer {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.7rem;
+    color: #64748b;
+    font-weight: 500;
+}
+.booking-price { color: #059669; font-weight: 600; }
+
+.booking-note {
+    font-size: 0.7rem;
+    color: #64748b;
+    background: #f1f5f9;
+    padding: 4px;
+    border-radius: 4px;
+    margin-top: 6px;
+    white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+}
+
+/* ----- Consolidated Forms & Modals ----- */
+.modal {
+    position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+    background: rgba(15, 23, 42, 0.6);
+    backdrop-filter: blur(4px);
+    display: flex; justify-content: center; align-items: center;
+    z-index: 200;
+}
+
+.modal-content {
+    background: #ffffff;
+    border-radius: 16px;
+    width: 650px;
+    max-width: 95%;
+    max-height: 90vh;
+    display: flex;
+    flex-direction: column;
+    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+}
+
+.modal-header {
+    padding: 1.5rem;
+    border-bottom: 1px solid #e2e8f0;
+    display: flex; justify-content: space-between; align-items: center;
+}
+
+.modal-header h3 { font-size: 1.25rem; font-weight: 700; color: #1e293b; }
+.modal-close { font-size: 1.5rem; color: #94a3b8; cursor: pointer; }
+.modal-close:hover { color: #ef4444; }
+
+.modal-body {
+    padding: 1.5rem;
+    overflow-y: auto;
+}
+
+/* Grouping UI (Consolidated) */
+.form-section {
+    background: #f8fafc;
+    border: 1px solid #e2e8f0;
+    border-radius: 12px;
+    padding: 1.2rem;
+    margin-bottom: 1.5rem;
+}
+
+.form-section-title {
+    font-size: 0.85rem;
+    font-weight: 700;
+    color: #075225;
+    text-transform: uppercase;
+    margin-bottom: 1rem;
+    letter-spacing: 0.5px;
+}
+
+.form-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+}
+.form-group.full-width { grid-column: 1 / -1; }
+
+.form-group label {
+    display: block; font-size: 0.8rem; font-weight: 600; color: #475569; margin-bottom: 0.4rem;
+}
+
+.form-input {
+    width: 100%; padding: 0.6rem 0.8rem; border: 1px solid #cbd5e1; border-radius: 8px; font-family: inherit; font-size: 0.9rem; transition: 0.2s;
+}
+.form-input:focus { outline: none; border-color: #76c090; box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.1); }
+
+.modal-footer {
+    padding: 1.2rem 1.5rem; border-top: 1px solid #e2e8f0; display: flex; justify-content: flex-end; gap: 1rem; background: #f8fafc; border-radius: 0 0 16px 16px;
+}
+
+.btn-secondary { background: #e2e8f0; color: #334155; border: none; padding: 0.6rem 1.2rem; border-radius: 8px; font-weight: 600; cursor: pointer; }
+.btn-secondary:hover { background: #cbd5e1; }
+.btn-danger { background: #fef2f2; color: #ef4444; border: 1px solid #fecaca; padding: 0.6rem 1.2rem; border-radius: 8px; font-weight: 600; cursor: pointer; }
+.btn-danger:hover { background: #fee2e2; }
+
+
+.language-switch {
+    display: flex;
+    gap: 5px;
+    margin-left: auto;
+    margin-right: 20px;
+}
+.lang-btn {
+    background: #f1f5f9;
+    border: none;
+    border-radius: 20px;
+    padding: 4px 12px;
+    cursor: pointer;
+    font-size: 0.9rem;
+    transition: 0.2s;
+}
+.lang-btn.active {
+    background: #368e6c;
+    color: white;
+}
+
+/* Toast */
+.toast {
+    position: fixed; bottom: 20px; right: 20px; color: white; padding: 12px 24px; border-radius: 8px; z-index: 1000; font-weight: 500;
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+    animation: slideUp 0.3s ease forwards;
+}
+@keyframes slideUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* Admin Tables */
+.admin-table { width: 100%; border-collapse: collapse; background: white; border-radius: 12px; overflow: hidden; box-shadow: 0 1px 3px rgba(0,0,0,0.05); }
+.admin-table th { background: #f8fafc; padding: 12px 16px; text-align: left; font-weight: 600; color: #475569; border-bottom: 1px solid #e2e8f0; }
+.admin-table td { padding: 12px 16px; border-bottom: 1px solid #e2e8f0; color: #1e293b; }
+.role-badge { padding: 4px 8px; border-radius: 4px; font-size: 0.75rem; font-weight: 600; }
+.role-badge.admin { background: #fee2e2; color: #b91c1c; }
+.role-badge.staff { background: #dbeafe; color: #2a8443; }
+
+/* Staff Card */
+.staff-card { background: white; border-radius: 12px; padding: 1.5rem; display: flex; justify-content: space-between; align-items: center; border: 1px solid #e2e8f0; margin-bottom: 1rem; }
+.staff-card.checked-in { border-left: 4px solid #22c55e; }

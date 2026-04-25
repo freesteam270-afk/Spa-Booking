@@ -1,0 +1,22 @@
+# Dockerfile สำหรับ Spa Booking System
+
+# เลือกใช้ base image เป็น Python เวอร์ชัน 3.13 (เบาและเร็ว)
+FROM python:3.13-slim
+
+# กำหนด Working Directory ภายใน container
+WORKDIR /app
+
+# คัดลอกเฉพาะ requirements.txt ก่อน เพื่อใช้ Docker Cache (ถ้า requirements ไม่เปลี่ยน จะได้ไม่ต้องลง dependencies ซ้ำ)
+COPY requirements.txt .
+
+# ติดตั้ง dependencies ที่จำเป็น
+RUN pip install --no-cache-dir -r requirements.txt
+
+# คัดลอก source code ที่เหลือทั้งหมดเข้าไปใน container
+COPY . .
+
+# เปิดพอร์ต 5000 ให้กับโลกภายนอก
+EXPOSE 5000
+
+# ใช้ python รัน app.py เมื่อ container เริ่มทำงาน
+CMD ["python", "app.py"]

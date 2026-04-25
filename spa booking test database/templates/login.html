@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <title>เข้าสู่ระบบ - Spa Booking</title>
+    <style>
+        * { margin:0; padding:0; box-sizing:border-box; }
+        body {
+            background-image: url("{{ url_for('static', filename='images/spa-bg.jpg') }}");
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            font-family: 'Sarabun', 'Prompt', sans-serif;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .login-container {
+            background: rgba(255, 255, 255, 0.386);
+            border-radius: 20px;
+            padding: 40px;
+            width: 400px;
+            max-width: 90%;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+            
+        }
+        h1 { text-align: center; color: #1e293b; margin-bottom: 30px; }
+        .form-group { margin-bottom: 20px; }
+        label { display: block; margin-bottom: 8px; font-weight: 500; }
+        input {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ccc;
+            border-radius: 10px;
+        }
+        button {
+            width: 100%;
+            padding: 12px;
+            background: #000000;
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+        .logo {
+        display: block;
+        width: 80px;          /* ปรับตามขนาดโลโก้ */
+        margin: 0 auto 20px;  /* จัดกึ่งกลาง และมีระยะห่างด้านล่าง */
+    }
+        button:hover { background: #1d7a55; }
+        .error { background: #fee; color: #c33; padding: 10px; border-radius: 8px; margin-bottom: 20px; }
+    </style>
+</head>
+<body>
+    <div class="login-container">
+        <img src="{{ url_for('static', filename='images/SCHA-logo.png') }}" 
+         alt="Logo" 
+         class="logo">
+         
+        <h1>SALA Chaweng Spa</h1>
+        {% if error %}<div class="error">{{ error }}</div>{% endif %}
+        <form method="POST">
+            <div class="form-group"><label>Username</label><input type="text" name="username" required></div>
+            <div class="form-group"><label>Password</label><input type="password" name="password" required></div>
+            <button type="submit">Login</button>
+        </form>
+    </div>
+</body>
+</html>
